@@ -11,9 +11,9 @@
 
 (module solar-system ()
 
-(import chicken scheme)
-(use glls-render (prefix glfw3 glfw:) (prefix opengl-glew gl:) gl-math gl-utils
-     hyperscene miscmacros lolevel extras srfi-1)
+(import scheme (chicken base) (chicken bitwise) (chicken memory) (chicken random)
+ glls-render (prefix glfw3 glfw:) (prefix epoxy gl:) gl-math gl-utils
+     hyperscene miscmacros srfi-1)
 
 (define cube (make-mesh vertices: '(attributes: ((position #:float 3)
                                                  (normal #:float 3))
@@ -242,20 +242,20 @@
 
 (define (add-system)
   (define (random*)
-    (- (random 100) 50))
+    (- (pseudo-random-integer 100) 50))
   (define (satelites parent order)
     (if (positive? order)
         (map (lambda (i)
                (let ((distance (* (add1 i) (expt 4 order)))
-                     (velocity (/ (- (random 100) 50) 1000))
+                     (velocity (/ (- (pseudo-random-integer 100) 50) 1000))
                      (node (add-planet-node parent mesh: cube)))
                  (set-node-position! node (make-point distance 0 0))
                  (make-body node distance velocity (satelites node (sub1 order)) 0 #f)))
-                (iota (+ 2 (random 4))))
+                (iota (+ 2 (pseudo-random-integer 4))))
         '()))
   (let* ((x (random*))
          (z (random*))
-         (color (list-ref sun-colors (random (length sun-colors))))
+         (color (list-ref sun-colors (pseudo-random-integer (length sun-colors))))
          (node (add-sun-node (scene) mesh: cube color: color))
          (light (add-light (scene) color 1000 (make-point 0 0 0) 0)))
     (set-node-position! node (make-point x 0 z))
@@ -267,7 +267,7 @@
 
 (define (delete-system)
   (unless (null? (systems))
-    (let ((body (list-ref (systems) (random (length (systems))))))
+    (let ((body (list-ref (systems) (pseudo-random-integer (length (systems))))))
       (delete-body body)
       (systems (delete body (systems))))))
 
@@ -296,8 +296,10 @@
   (update-scenes))
 
 ;;; Initialization and main loop
-(glfw:with-window (480 480 "Example" resizable: #f)
-  (gl:init)
+(glfw:with-window (480 480 "Example" resizable: #f
+                   client-api: glfw:+opengl-api+
+                   context-version-major: 3
+                   context-version-minor: 3)
   (gl:enable gl:+depth-test+)
   (gl:depth-func gl:+less+)
   (compile-pipelines)

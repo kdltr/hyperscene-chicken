@@ -13,9 +13,9 @@
 
 (module aabb-tree-test ()
 
-(import chicken scheme)
-(use glls-render (prefix glfw3 glfw:) (prefix opengl-glew gl:) gl-math gl-utils
-     hyperscene srfi-1 extras miscmacros lolevel)
+(import scheme (chicken base) (chicken bitwise) (chicken keyword) (chicken memory) (chicken random)
+ glls-render (prefix glfw3 glfw:) (prefix epoxy gl:) gl-math gl-utils
+     hyperscene srfi-1 miscmacros)
 
 (define cube (make-mesh vertices: '(attributes: ((position #:float 3))
                                     initial-elements: ((position . (0 0 0
@@ -156,7 +156,7 @@
 
 (define (add-cube)
   (define (random*)
-    (- (random 100) 50))
+    (- (pseudo-random-integer 100) 50))
   (unless (null? (axes))
     (let ((x (if (member 'x (axes)) (random*) 0))
           (y (if (member 'y (axes)) (random*) 0))
@@ -171,7 +171,7 @@
 
 (define (delete-cube)
   (unless (null? (nodes))
-    (let ((node (list-ref (nodes) (random (length (nodes))))))
+    (let ((node (list-ref (nodes) (pseudo-random-integer (length (nodes))))))
       (delete-node node)
       (nodes (delete node (nodes))))))
 
@@ -180,8 +180,10 @@
     (delete-cube)))
 
 ;;; Initialization and main loop
-(glfw:with-window (480 480 "Example" resizable: #f)
-  (gl:init)
+(glfw:with-window (480 480 "Example" resizable: #f
+                   client-api: glfw:+opengl-api+
+                   context-version-major: 3
+                   context-version-minor: 3)
   (gl:enable gl:+depth-test+)
   (gl:depth-func gl:+less+)
   (compile-pipelines)

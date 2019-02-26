@@ -1,0 +1,12 @@
+;; hyperscene.egg -*- scheme -*-
+
+((synopsis "Scene graph and spatial partitioning")
+ (author "Alex Charlton")
+ (category graphics)
+ (license "BSD")
+ (dependencies miscmacros)
+ (components (extension hyperscene
+                        (linkage dynamic)
+                        (csc-options "-C" "-I./hyperscene/include/")
+                        (link-options "-L" "./hyperscene/build/*.o"))))
+

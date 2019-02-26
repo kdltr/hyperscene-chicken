@@ -6,9 +6,9 @@
 
 (module simple-scene ()
 
-(import chicken scheme)
-(use hyperscene glls-render (prefix glfw3 glfw:) (prefix opengl-glew gl:)
-     gl-math gl-utils miscmacros lolevel extras srfi-1)
+(import scheme (chicken base) (chicken bitwise) (chicken foreign) (chicken memory)
+hyperscene glls-render (prefix glfw3 glfw:) (prefix epoxy gl:)
+     gl-math gl-utils miscmacros srfi-1)
 
 ;; Mesh
 (define cube (make-mesh vertices: '(attributes: ((position #:float 3))
@@ -66,8 +66,10 @@
               (foreign-value "&free" c-pointer))))
 
 ;;; Initialization and main loop
-(glfw:with-window (480 480 "Example" resizable: #f)
-  (gl:init)
+(glfw:with-window (480 480 "Example" resizable: #f
+                   client-api: glfw:+opengl-api+
+                   context-version-major: 3
+                   context-version-minor: 3)
   (gl:enable gl:+depth-test+)
   (gl:depth-func gl:+less+)
   (compile-pipelines)
