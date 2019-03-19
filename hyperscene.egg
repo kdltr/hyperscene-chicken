@@ -2,6 +2,7 @@
 
 ((synopsis "Scene graph and spatial partitioning")
  (author "Alex Charlton")
+ (maintainer "Adrien (Kooda) Ramos")
  (category graphics)
  (license "BSD")
  (dependencies miscmacros)

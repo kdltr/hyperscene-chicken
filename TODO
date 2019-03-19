@@ -1,2 +1,3 @@
 - Fix static linking
 - When 5.1 is out, use archive facility
+- When 5.1 is out, reintegrate compile-time options (with cond-expand in egg file)

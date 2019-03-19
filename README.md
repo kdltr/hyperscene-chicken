@@ -1,14 +1,14 @@
 # Hyperscene
 Hyperscene is a scene library – made for placing objects in a shared world for the purpose of rendering – for CHICKEN Scheme. Hyperscene features a scene graph, cameras with a variety of movement types, frustum culling based on an configurable spatial partitioning system, and a lighting extension. Hyperscene is target agnostic: it is not bound to any particular rendering target and should work equally well for curses, OpenGL, and anything in between.
 
-Hyperscene is a set of bindings to the [Hyperscene C library](https://github.com/AlexCharlton/Hyperscene). It’s fairly rough around the edges for general use in Scheme. It should generally be wrapped in order to make it more palatable. [Hypergiant](http://wiki.call-cc.org/eggref/4/hypergiant) is one such library that wraps Hyperscene for use with OpenGL.
+Hyperscene is a set of bindings to the [Hyperscene C library](https://github.com/AlexCharlton/Hyperscene). It’s fairly rough around the edges for general use in Scheme. It should generally be wrapped in order to make it more palatable. [Hypergiant](https://wiki.call-cc.org/egg/hypergiant) is one such library that wraps Hyperscene for use with OpenGL.
 
-Some rendering options are defined at compile time. See `render-camera` for details.
+Some rendering options are defined at compile time. See `render-camera` for details. **Important note, in version 0.4.0 (for CHICKEN 5), these options aren't available anymore and will be added back when CHICKEN 5.1 is out**
 
 ## Installation
-This repository is a [Chicken Scheme](http://call-cc.org/) egg.
+This repository is a [Chicken Scheme](https://call-cc.org/) egg.
 
-It is part of the [Chicken egg index](http://wiki.call-cc.org/chicken-projects/egg-index-4.html) and can be installed with `chicken-install hyperscene`.
+It is part of the [Chicken egg index](https://eggs.call-cc.org/5) and can be installed with `chicken-install hyperscene`.
 
 Various debugging statements are printed (in case you’re wondering how many things are being drawn, or what the partitioning system is doing) when the feature `debug` is defined at compile-time.
 
@@ -91,7 +91,7 @@ Return the `#f32(x y z)` position of the node relative to its parent. Modifying 
 
     [procedure] (node-rotation NODE)
 
-Return a pointer to the node’s quaternion `(x y z w)` that describes the rotation of the node relative to its parent. Modifying this quaternion (e.g. with gl-math’s imperative [quaternion functions](http://wiki.call-cc.org/eggref/4/gl-math#quaternion-operations)) will rotate the node. Make sure to call `node-needs-update!` after modifying the returned quaternion.
+Return a pointer to the node’s quaternion `(x y z w)` that describes the rotation of the node relative to its parent. Modifying this quaternion (e.g. with gl-math’s imperative [quaternion functions](https://wiki.call-cc.org/egg/gl-math#quaternion-operations)) will rotate the node. Make sure to call `node-needs-update!` after modifying the returned quaternion.
 
     [procedure] (node-needs-update! NODE)
 
@@ -120,7 +120,7 @@ When targeting OpenGL, one pipeline per shader program is generally desirable. T
 
     [procedure] (add-pipeline PRE-RENDER RENDER POST-RENDER [ALPHA])
 
-Create a new pipeline with the given [callbacks](http://wiki.call-cc.org/man/4/Callbacks) (or pointers to pure C functions). `ALPHA?` indicates whether or not the pipeline can render any transparent elements (defaults to `#f`).
+Create a new pipeline with the given [callbacks](https://wiki.call-cc.org/man/5/Module%20(chicken%20foreign)#callbacks) (or pointers to pure C functions). `ALPHA?` indicates whether or not the pipeline can render any transparent elements (defaults to `#f`).
 
     [procedure] (delete-pipeline PIPELINE)
 
@@ -128,7 +128,7 @@ Delete the given pipeline.
 
 
 ### Cameras
-Cameras, aside from having an orientation and position within a given scene, have two main properties. Their *type* is the sort of [projection](http://en.wikipedia.org/wiki/Graphical_projection) that the camera uses: either orthographic or perspective. The *style* of the camera indicates the way in which the camera can be moved (see [Movement and rotation](#movement-and-rotation) for details of each function):
+Cameras, aside from having an orientation and position within a given scene, have two main properties. Their *type* is the sort of [projection](https://en.wikipedia.org/wiki/Graphical_projection) that the camera uses: either orthographic or perspective. The *style* of the camera indicates the way in which the camera can be moved (see [Movement and rotation](#movement-and-rotation) for details of each function):
 
 - A *position* camera is one where the position and rotation of the camera is explicitly set. Movement functions: `move-camera!`, `set-camera-position!`, `camera-rotation`.
 - A *look-at* camera is given a position, an up-vector, and a point that it is looking at. The rotation of the camera is determined from these vectors. Movement functions: `move-camera!`, `set-camera-position!`, `set-camera-up!`, `camera-look-at!`.
@@ -217,7 +217,7 @@ Return the `#f32(x y z)` position of the camera. Modifying this vector will not 
 
     [procedure] (camera-rotation CAMERA)
 
-Return a pointer to the node’s quaternion `(x y z w)` that describes the rotation of the camera. Modifying this quaternion (e.g. with gl-math’s imperative [quaternion functions](http://wiki.call-cc.org/eggref/4/gl-math#quaternion-operations)) will rotate *position* cameras. The returned quaternion must not be modified for any other camera styles.
+Return a pointer to the node’s quaternion `(x y z w)` that describes the rotation of the camera. Modifying this quaternion (e.g. with gl-math’s imperative [quaternion functions](https://wiki.call-cc.org/egg/gl-math#quaternion-operations)) will rotate *position* cameras. The returned quaternion must not be modified for any other camera styles.
 
     [procedure] (camera-look-at! CAMERA POINT)
 
@@ -314,7 +314,7 @@ Returns a pointer to the inverse transpose model matrix of the node currently be
 
 
 ### Spatial Partitioning
-Hyperscene only renders nodes that are within the bounds of a camera (i.e. it performs view frustum culling). In order for it to efficiently sort through the nodes, a [spatial partitioning](http://en.wikipedia.org/wiki/Space_partitioning) system is used. Different spatial partitioning systems can be used on a per-scene basis. 
+Hyperscene only renders nodes that are within the bounds of a camera (i.e. it performs view frustum culling). In order for it to efficiently sort through the nodes, a [spatial partitioning](https://en.wikipedia.org/wiki/Space_partitioning) system is used. Different spatial partitioning systems can be used on a per-scene basis.
 
 If you wish to write a new partition interface, see the [Hyperscene](https://github.com/AlexCharlton/Hyperscene) documentation.
 
@@ -442,9 +442,15 @@ Every scene is given a pool from which to allocate lights, the size of which can
 The [Hyperscene C library](https://github.com/AlexCharlton/Hyperscene) is extensible in C. See [its documentation](https://github.com/AlexCharlton/Hyperscene#writing-your-own-extensions) for details.
 
 ## Examples
-See the [examples directory](https://github.com/AlexCharlton/hyperscene-chicken/tree/master/examples) to see Hyperscene in action.
+See the [examples directory](https://www.upyum.com/cgit.cgi/hyperscene-chicken/tree/examples) to see Hyperscene in action.
 
 ## Version history
+### Version 0.4.0
+19 March 2019
+
+* Maintenance given to [Kooda](/users/kooda)
+* Port to CHICKEN 5
+
 ### Version 0.3.0
 20 January 2014
 
@@ -463,12 +469,14 @@ See the [examples directory](https://github.com/AlexCharlton/hyperscene-chicken/
 * Initial release
 
 ## Source repository
-Source available on [GitHub](https://github.com/AlexCharlton/hyperscene-chicken).
+Source available [here](https://www.upyum.com/cgit.cgi/hyperscene-chicken/).
 
-Bug reports and patches welcome! Bugs can be reported via GitHub or to alex.n.charlton at gmail.
+Bug reports and patches welcome! Bugs can be reported to kooda@upyum.com
 
-## Author
+## Authors
 Alex Charlton
+
+Adrien (Kooda) Ramos
 
 ## License
 BSD
