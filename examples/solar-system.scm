@@ -2,7 +2,7 @@
 ;;;;
 ;;;; Create bad looking, but dynamically lit "solar systems"
 ;;;;
-;;;; Compile with csc -lGL solar-system.scm
+;;;; Compile with csc -L -lepoxy solar-system.scm
 ;;;;
 ;;;; Add a new system with `a`, delete them with `d`.
 ;;;; Move the camera back and forward, left and right with the arrows
@@ -11,9 +11,20 @@
 
 (module solar-system ()
 
-(import scheme (chicken base) (chicken bitwise) (chicken memory) (chicken random)
- glls-render (prefix glfw3 glfw:) (prefix epoxy gl:) gl-math gl-utils
-     hyperscene miscmacros srfi-1)
+(import
+  scheme
+  (chicken base)
+  (chicken bitwise)
+  (chicken memory)
+  (chicken random)
+  glls-render
+  (prefix glfw3 glfw:)
+  (prefix epoxy gl:)
+  gl-math
+  gl-utils
+  hyperscene
+  miscmacros
+  srfi-1)
 
 (define cube (make-mesh vertices: '(attributes: ((position #:float 3)
                                                  (normal #:float 3))

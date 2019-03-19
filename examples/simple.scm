@@ -2,13 +2,24 @@
 ;;;;
 ;;;; A simple hyperscene example
 ;;;;
-;;;; Compile with csc -lGL simple.scm
+;;;; Compile with csc -L -lepoxy simple.scm
 
 (module simple-scene ()
 
-(import scheme (chicken base) (chicken bitwise) (chicken foreign) (chicken memory)
-hyperscene glls-render (prefix glfw3 glfw:) (prefix epoxy gl:)
-     gl-math gl-utils miscmacros srfi-1)
+(import
+  scheme
+  (chicken base)
+  (chicken bitwise)
+  (chicken foreign)
+  (chicken memory)
+  hyperscene
+  glls-render
+  (prefix glfw3 glfw:)
+  (prefix epoxy gl:)
+  gl-math
+  gl-utils
+  miscmacros
+  srfi-1)
 
 ;; Mesh
 (define cube (make-mesh vertices: '(attributes: ((position #:float 3))

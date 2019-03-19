@@ -7,6 +7,12 @@
  (dependencies miscmacros)
  (components (extension hyperscene
                         (linkage dynamic)
-                        (csc-options "-C" "-I./hyperscene/include/")
-                        (link-options "-L" "./hyperscene/build/*.o"))))
-
+                        (csc-options "./hyperscene/src/aabb-tree.c"
+                                     "./hyperscene/src/camera.c"
+                                     "./hyperscene/src/lighting.c"
+                                     "./hyperscene/src/pools.c"
+                                     "./hyperscene/src/scene.c"
+                                     "./hyperscene/src/vector.c"
+                                     "./hyperscene/hypermath/src/hypermath.c"
+                                     -C "-I./hyperscene/include/"
+                                     -C "-I./hyperscene/hypermath/include/"))))

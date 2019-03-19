@@ -2,7 +2,7 @@
 ;;;;
 ;;;; A program made to test out the partition interface. Try compiling hyperscene with -D debug to see the aabb-tree debugging information.
 ;;;;
-;;;; Compile with csc -lGL aabb-tree.scm
+;;;; Compile with csc -L -lepoxy aabb-tree.scm
 ;;;;
 ;;;; Add nodes with `a`, delete them with `d`.
 ;;;; Toggle the number of nodes that are being added and deleted, between 1 and 10,  with `n`.
@@ -13,9 +13,21 @@
 
 (module aabb-tree-test ()
 
-(import scheme (chicken base) (chicken bitwise) (chicken keyword) (chicken memory) (chicken random)
- glls-render (prefix glfw3 glfw:) (prefix epoxy gl:) gl-math gl-utils
-     hyperscene srfi-1 miscmacros)
+(import
+  scheme
+  (chicken base)
+  (chicken bitwise)
+  (chicken keyword)
+  (chicken memory)
+  (chicken random)
+  glls-render
+  (prefix glfw3 glfw:)
+  (prefix epoxy gl:)
+  gl-math
+  gl-utils
+  hyperscene
+  srfi-1
+  miscmacros)
 
 (define cube (make-mesh vertices: '(attributes: ((position #:float 3))
                                     initial-elements: ((position . (0 0 0

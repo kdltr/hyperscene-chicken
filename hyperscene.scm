@@ -88,8 +88,14 @@
    set-material-shininess!
    set-material-specular-color!)
 
-(import scheme (chicken base) (chicken foreign) (chicken gc) (chicken memory)
-srfi-4 miscmacros)
+(import
+  scheme
+  (chicken base)
+  (chicken foreign)
+  (chicken gc)
+  (chicken memory)
+  srfi-4
+  miscmacros)
 
 (foreign-declare "#include <hyperscene.h>")
 (foreign-declare "#include <hypersceneLighting.h>")

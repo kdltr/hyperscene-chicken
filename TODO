@@ -1,1 +1,2 @@
-Fix static linking
+- Fix static linking
+- When 5.1 is out, use archive facility
