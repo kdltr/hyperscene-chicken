@@ -6,14 +6,22 @@
  (category graphics)
  (license "BSD")
  (dependencies miscmacros)
- (components (extension hyperscene
-                        (linkage dynamic)
-                        (csc-options "./hyperscene/src/aabb-tree.c"
-                                     "./hyperscene/src/camera.c"
-                                     "./hyperscene/src/lighting.c"
-                                     "./hyperscene/src/pools.c"
-                                     "./hyperscene/src/scene.c"
-                                     "./hyperscene/src/vector.c"
-                                     "./hyperscene/hypermath/src/hypermath.c"
-                                     -C "-I./hyperscene/include/"
-                                     -C "-I./hyperscene/hypermath/include/"))))
+ (component-options
+   (csc-options
+     -O3
+     -C
+     "-O3 -fPIC -Ihyperscene/include/ -Ihyperscene/hypermath/include"))
+ (components
+   (c-object
+     hypermath
+     (source "hyperscene/hypermath/src/hypermath.c")
+     (install-name "hyperscene-hypermath"))
+   (c-object aabb-tree (source "hyperscene/src/aabb-tree.c"))
+   (c-object camera (source "hyperscene/src/camera.c"))
+   (c-object lighting (source "hyperscene/src/lighting.c"))
+   (c-object pools (source "hyperscene/src/pools.c"))
+   (c-object scene (source "hyperscene/src/scene.c"))
+   (c-object vector (source "hyperscene/src/vector.c"))
+   (extension
+     hyperscene
+     (objects hypermath aabb-tree camera lighting pools scene vector))))
